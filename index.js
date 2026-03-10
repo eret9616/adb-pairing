@@ -317,15 +317,17 @@ function connectDevice(device) {
 function launchScrcpy(extraArgs = []) {
   log("正在启动 scrcpy...");
 
-  // scrcpy 启动参数
+  // scrcpy 启动参数（针对无线连接优化，降低延迟）
   const args = [
     "-b",
-    "8M", // 视频码率 8Mbps（无线连接建议适当降低以减少延迟）
+    "2M", // 视频码率 2Mbps（无线连接低码率减少延迟，画质足够用）
     "-m",
-    "1920", // 最大分辨率维度（保持画质的同时降低传输量）
+    "1280", // 最大分辨率维度 1280（降低分辨率大幅减少数据量）
     "--max-fps",
-    "60", // 最大帧率 60fps
-    ...extraArgs, // 用户自定义参数（如 --no-audio）
+    "30", // 最大帧率 30fps（无线下 60fps 容易卡，30fps 更流畅）
+    "--video-codec=h265", // 使用 H.265 编码（比 H.264 压缩率更高，同码率画质更好）
+    "--no-audio", // 关闭音频传输（减少带宽占用，降低延迟）
+    ...extraArgs, // 用户自定义参数
   ];
 
   log(`scrcpy ${args.join(" ")}`);
