@@ -130,3 +130,53 @@ sequenceDiagram
 
 换网络后只是 IP 和端口变了，但密钥没变。
 工具通过 mDNS 自动发现新的 IP 和端口，所以换网络也能自动连上。
+
+---
+
+## Android 辅助 APP
+
+`android-app/` 目录包含一个 Android 辅助应用，功能：
+
+1. **一键开关无线调试** -- 不用打开系统设置，直接在 app 里开关
+2. **一键跳转配对页面** -- 首次配对时，直接跳到无线调试设置页查看配对码
+3. **Quick Settings 磁贴** -- 下拉通知栏直接开关无线调试
+
+### 安装 APK
+
+编译好的 APK 在 `android-app/app/build/outputs/apk/debug/app-debug.apk`
+
+```bash
+# 通过 USB 安装到手机（只需要这一次 USB 连接）
+adb install android-app/app/build/outputs/apk/debug/app-debug.apk
+
+# 授予权限（同一次 USB 连接时执行）
+adb shell pm grant com.adbpairing android.permission.WRITE_SECURE_SETTINGS
+```
+
+授权完成后拔掉 USB，以后就不需要 USB 了。
+
+### 编译 APK（如果需要修改代码）
+
+```bash
+# 需要 JDK 21 和 Android SDK
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home
+cd android-app
+./gradlew assembleDebug
+```
+
+### 完整使用流程
+
+```
+第一次（需要 USB）:
+  1. USB 连接手机
+  2. adb install app-debug.apk
+  3. adb shell pm grant com.adbpairing android.permission.WRITE_SECURE_SETTINGS
+  4. 打开 app -> 开启无线调试 -> 点击"打开无线调试设置" -> 点配对
+  5. 电脑运行 scrcpy-auto，输入配对码
+  6. 拔掉 USB，以后不需要了
+
+以后每次:
+  1. 手机：打开 ADB Pairing app -> 确认无线调试已开启（或下拉通知栏点磁贴）
+  2. 电脑：运行 scrcpy-auto
+  3. 完成
+```

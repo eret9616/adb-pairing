@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="32dp"
+    android:background="#FF1A1A2E">
+
+    <!-- 标题 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ADB Pairing"
+        android:textSize="28sp"
+        android:textColor="#FFFFFFFF"
+        android:textStyle="bold"
+        android:layout_marginTop="40dp" />
+
+    <!-- 状态显示 -->
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="无线调试: 检查中..."
+        android:textSize="22sp"
+        android:textColor="#FFFFFFFF"
+        android:layout_marginTop="40dp" />
+
+    <!-- 开关按钮 -->
+    <Button
+        android:id="@+id/toggleButton"
+        android:layout_width="280dp"
+        android:layout_height="60dp"
+        android:text="开启无线调试"
+        android:textSize="18sp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#FF6200EE" />
+
+    <!-- 打开设置页按钮 -->
+    <Button
+        android:id="@+id/openSettingsButton"
+        android:layout_width="280dp"
+        android:layout_height="60dp"
+        android:text="打开无线调试设置\n(查看配对码)"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#FF03DAC5" />
+
+    <!-- 说明文字 -->
+    <TextView
+        android:id="@+id/infoText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="加载中..."
+        android:textSize="14sp"
+        android:textColor="#CCFFFFFF"
+        android:lineSpacingExtra="4dp"
+        android:layout_marginTop="32dp" />
+
+</LinearLayout>

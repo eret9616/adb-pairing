@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        WRITE_SECURE_SETTINGS 权限说明：
+        这个权限允许 app 修改系统安全设置（如开关无线调试）。
+        普通 app 无法在安装时获得此权限，需要通过 ADB 授予：
+        adb shell pm grant com.adbpairing android.permission.WRITE_SECURE_SETTINGS
+        授权一次后永久生效，卸载重装需要重新授权。
+    -->
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+
+    <application
+        android:allowBackup="true"
+        android:label="ADB Pairing"
+        android:theme="@style/Theme.AdbPairing"
+        android:supportsRtl="true">
+
+        <!-- 主界面 Activity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="ADB Pairing">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--
+            Quick Settings Tile（快速设置磁贴）
+            用户可以在下拉通知栏的快速设置中添加这个磁贴，
+            点击一下就能开关无线调试，不用打开 app。
+        -->
+        <service
+            android:name=".WirelessDebugTileService"
+            android:label="无线调试"
+            android:icon="@drawable/ic_wifi_tethering"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+    </application>
+
+</manifest>
