@@ -317,17 +317,15 @@ function connectDevice(device) {
 function launchScrcpy(extraArgs = []) {
   log("正在启动 scrcpy...");
 
-  // scrcpy 启动参数（针对无线连接优化，降低延迟）
+  // scrcpy 启动参数（官方推荐的超低延迟配置）
+  // 参考：https://github.com/Genymobile/scrcpy/blob/master/doc/video.md
   const args = [
-    "-b",
-    "2M", // 视频码率 2Mbps（无线连接低码率减少延迟，画质足够用）
     "-m",
-    "1280", // 最大分辨率维度 1280（降低分辨率大幅减少数据量）
-    "--max-fps",
-    "30", // 最大帧率 30fps（无线下 60fps 容易卡，30fps 更流畅）
-    "--video-codec=h265", // 使用 H.265 编码（比 H.264 压缩率更高，同码率画质更好）
-    "--no-audio", // 关闭音频传输（减少带宽占用，降低延迟）
-    ...extraArgs, // 用户自定义参数
+    "800", // 降分辨率到 800，大幅减少数据传输量
+    "--max-fps=60", // 保持 60fps，降帧率不减延迟只会让画面更卡
+    "--video-buffer=0", // 零视频缓冲，这是降低延迟的核心参数
+    "--no-audio", // 关闭音频，减少带宽占用
+    ...extraArgs, // 用户自定义参数（可覆盖上面的默认值）
   ];
 
   log(`scrcpy ${args.join(" ")}`);
